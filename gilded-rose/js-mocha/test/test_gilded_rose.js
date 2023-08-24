@@ -24,5 +24,16 @@ describe('Gilded Rose', () => {
         quality: 18
       })
     })
+
+    it('should update 0 quality of regular item with for 1 day', () => {
+      const gildedRose = new Shop([new Item('Dexterity Vest', 10, 0)])
+      const items = gildedRose.updateQuality()
+
+      expect(items[0]).to.eql({
+        name: 'Dexterity Vest',
+        sellIn: 9,
+        quality: 0
+      })
+    })
   })
 })
