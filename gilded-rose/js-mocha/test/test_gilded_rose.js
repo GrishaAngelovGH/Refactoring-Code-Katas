@@ -118,5 +118,16 @@ describe('Gilded Rose', () => {
         quality: 23
       })
     })
+
+    it('should not pass max quality after update of Backstage passes with 5 days left for 1 day', () => {
+      const gildedRose = new Shop([new Item('Backstage passes to a TAFKAL80ETC concert', 5, 49)])
+      const items = gildedRose.updateQuality()
+
+      expect(items[0]).to.eql({
+        name: 'Backstage passes to a TAFKAL80ETC concert',
+        sellIn: 4,
+        quality: 50
+      })
+    })
   })
 })
