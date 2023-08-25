@@ -60,4 +60,17 @@ describe('Gilded Rose', () => {
       })
     })
   })
+
+  describe('Sulfuras', () => {
+    it('should update quality of Sulfuras for 1 day', () => {
+      const gildedRose = new Shop([new Item('Sulfuras, Hand of Ragnaros', 5, 80)])
+      const items = gildedRose.updateQuality()
+
+      expect(items[0]).to.eql({
+        name: 'Sulfuras, Hand of Ragnaros',
+        sellIn: 5,
+        quality: 80
+      })
+    })
+  })
 })
