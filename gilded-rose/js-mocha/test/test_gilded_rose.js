@@ -48,5 +48,16 @@ describe('Gilded Rose', () => {
         quality: 1
       })
     })
+
+    it('should update 50 quality of aged brie for 1 day', () => {
+      const gildedRose = new Shop([new Item('Aged Brie', 2, 50)])
+      const items = gildedRose.updateQuality()
+
+      expect(items[0]).to.eql({
+        name: 'Aged Brie',
+        sellIn: 1,
+        quality: 50
+      })
+    })
   })
 })
