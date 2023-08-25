@@ -49,7 +49,7 @@ describe('Gilded Rose', () => {
       })
     })
 
-    it('should update 50 quality of aged brie for 1 day', () => {
+    it('should not pass max quality after update of aged brie for 1 day', () => {
       const gildedRose = new Shop([new Item('Aged Brie', 2, 50)])
       const items = gildedRose.updateQuality()
 
