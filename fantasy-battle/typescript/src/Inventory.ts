@@ -4,10 +4,6 @@ import { Stats } from './Stats'
 export class Inventory {
   public constructor(private _equipment: Equipment) { }
 
-  public get equipment(): Equipment {
-    return this._equipment
-  }
-
   private getBaseDamage(): number {
     return this._equipment.getBaseDamage()
   }
