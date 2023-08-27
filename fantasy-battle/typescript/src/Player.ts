@@ -10,9 +10,7 @@ export class Player extends Target {
   }
 
   calculateDamage(other: Target): Damage {
-    const baseDamage = this._inventory.getBaseDamage()
-    const damageModifier = this._inventory.getDamageModifier(this._stats)
-    const totalDamage = Math.round(baseDamage * damageModifier)
+    const totalDamage = this._inventory.getTotalDamage(this._stats)
     const soak = this.getSoak(other, totalDamage)
     return new Damage(Math.max(0, totalDamage - soak))
   }
