@@ -16,18 +16,12 @@ export class Player extends Target {
   }
 
   private getSoak(other: Target, totalDamage: number): number {
-    let soak = 0
-    if (other instanceof Player) {
-      soak = totalDamage
-    } else if (other instanceof SimpleEnemy) {
-      const simpleEnemy: SimpleEnemy = other
-      soak = Math.round(simpleEnemy.armor.damageSoak *
-        (simpleEnemy.buffs
-          .reduce(
-            (sum, buff) => sum + buff.soakModifier, 0)
-          + 1)
+    const soak = other instanceof Player ?
+      totalDamage : Math.round(
+        (other as SimpleEnemy).armor.damageSoak *
+        ((other as SimpleEnemy).buffs.reduce((sum, buff) => sum + buff.soakModifier, 0) + 1)
       )
-    }
+
     return soak
   }
 }
