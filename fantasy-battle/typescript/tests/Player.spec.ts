@@ -1,12 +1,12 @@
-import { Inventory } from '../src/Inventory'
-import { Stats } from '../src/Stats'
-import { SimpleEnemy } from '../src/SimpleEnemy'
-import { Player } from '../src/Player'
-import { Damage } from '../src/Damage'
-import { BasicItem } from '../src/BasicItem'
-import { Equipment } from '../src/Equipment'
-import { SimpleArmor } from '../src/SimpleArmor'
 import { BasicBuff } from '../src/BasicBuff'
+import { BasicItem } from '../src/BasicItem'
+import { Damage } from '../src/Damage'
+import { Equipment } from '../src/Equipment'
+import { Inventory } from '../src/Inventory'
+import { Player } from '../src/Player'
+import { SimpleArmor } from '../src/SimpleArmor'
+import { SimpleEnemy } from '../src/SimpleEnemy'
+import { Stats } from '../src/Stats'
 
 describe('Player', () => {
   it('calculates damage', () => {

@@ -18,8 +18,6 @@ export class Player extends Target {
   private getSoak(other: Target, totalDamage: number): number {
     let soak = 0
     if (other instanceof Player) {
-      // TODO: Not implemented yet
-      //  Add friendly fire
       soak = totalDamage
     } else if (other instanceof SimpleEnemy) {
       const simpleEnemy: SimpleEnemy = other

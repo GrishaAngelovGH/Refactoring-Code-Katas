@@ -1,3 +1,3 @@
 export interface Armor {
-    get damageSoak(): number;
+  get damageSoak(): number
 }

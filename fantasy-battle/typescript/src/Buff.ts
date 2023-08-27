@@ -1,4 +1,4 @@
 export interface Buff {
-    get soakModifier(): number;
-    get damageModifier(): number;
+  get soakModifier(): number
+  get damageModifier(): number
 }

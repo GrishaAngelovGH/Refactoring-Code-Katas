@@ -1,4 +1,4 @@
 export interface Item {
-    get baseDamage(): number;
-    get damageModifier(): number;
+  get baseDamage(): number
+  get damageModifier(): number
 }
