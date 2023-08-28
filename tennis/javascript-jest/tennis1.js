@@ -18,9 +18,9 @@ const advantage = {
   '-1': 'Advantage player2'
 }
 
-const getScoreOrDeuce = score => scores[score] || 'Deuce'
+const getEqualScoreOrDeuce = score => scores[score] || 'Deuce'
 
-const calculateScoreGTE4 = (m_score1, m_score2) => {
+const determineAdvantageOrWin = (m_score1, m_score2) => {
   const result = m_score1 - m_score2
 
   const determinedAdvantage = advantage[result]
@@ -29,7 +29,7 @@ const calculateScoreGTE4 = (m_score1, m_score2) => {
   return determinedAdvantage || determinedWin
 }
 
-const calculateScoreLT3 = (score, m_score1, m_score2, tempScore) => {
+const determinePoints = (score, m_score1, m_score2, tempScore) => {
   tempScore = m_score1
   score += points[tempScore]
 
@@ -43,16 +43,20 @@ const calculateScoreLT3 = (score, m_score1, m_score2, tempScore) => {
   return score
 }
 
-function getScore(m_score1, m_score2) {
+const getScore = (m_score1, m_score2) => {
   let score = ''
   let tempScore = 0
 
   if (m_score1 === m_score2) {
-    score = getScoreOrDeuce(m_score1)
-  } else if (m_score1 >= 4 || m_score2 >= 4) {
-    score = calculateScoreGTE4(m_score1, m_score2)
-  } else {
-    score = calculateScoreLT3(score, m_score1, m_score2, tempScore)
+    score = getEqualScoreOrDeuce(m_score1)
+  }
+
+  if (m_score1 !== m_score2 && (m_score1 >= 4 || m_score2 >= 4)) {
+    score = determineAdvantageOrWin(m_score1, m_score2)
+  }
+
+  if (m_score1 !== m_score2 && !(m_score1 >= 4 || m_score2 >= 4)) {
+    score = determinePoints(score, m_score1, m_score2, tempScore)
   }
 
   return score
