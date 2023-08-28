@@ -1,23 +1,16 @@
 'use strict'
 
+const scores = {
+  0: 'Love-All',
+  1: 'Fifteen-All',
+  2: 'Thirty-All'
+}
+
 function getScore(m_score1, m_score2) {
-  var score = ''
+  let score = ''
   var tempScore = 0
   if (m_score1 === m_score2) {
-    switch (m_score1) {
-      case 0:
-        score = 'Love-All'
-        break
-      case 1:
-        score = 'Fifteen-All'
-        break
-      case 2:
-        score = 'Thirty-All'
-        break
-      default:
-        score = 'Deuce'
-        break
-    }
+    score = scores[m_score1] || 'Deuce'
   } else if (m_score1 >= 4 || m_score2 >= 4) {
     var minusResult = m_score1 - m_score2
     if (minusResult === 1) { score = 'Advantage player1' }
