@@ -6,9 +6,16 @@ const scores = {
   2: 'Thirty-All'
 }
 
+const points = {
+  0: 'Love',
+  1: 'Fifteen',
+  2: 'Thirty',
+  3: 'Forty'
+}
+
 function getScore(m_score1, m_score2) {
   let score = ''
-  var tempScore = 0
+  let tempScore = 0
   if (m_score1 === m_score2) {
     score = scores[m_score1] || 'Deuce'
   } else if (m_score1 >= 4 || m_score2 >= 4) {
@@ -24,20 +31,7 @@ function getScore(m_score1, m_score2) {
         score += '-'
         tempScore = m_score2
       }
-      switch (tempScore) {
-        case 0:
-          score += 'Love'
-          break
-        case 1:
-          score += 'Fifteen'
-          break
-        case 2:
-          score += 'Thirty'
-          break
-        case 3:
-          score += 'Forty'
-          break
-      }
+      score += points[tempScore]
     }
   }
   return score
