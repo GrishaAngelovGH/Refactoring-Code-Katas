@@ -30,12 +30,13 @@ const calculateScoreGTE4 = (m_score1, m_score2) => {
 }
 
 const calculateScoreLT3 = (score, m_score1, m_score2, tempScore) => {
-  for (var i = 1; i < 3; i++) {
-    if (i === 1) { tempScore = m_score1 }
-    else {
-      score += '-'
-      tempScore = m_score2
-    }
+  tempScore = m_score1
+  score += points[tempScore]
+
+  for (var i = 1; i < 2; i++) {
+    score += '-'
+    tempScore = m_score2
+
     score += points[tempScore]
   }
 
