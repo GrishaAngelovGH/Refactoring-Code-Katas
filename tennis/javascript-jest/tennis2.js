@@ -8,13 +8,11 @@ const scores = {
 }
 
 const determineEqualScoreOrDeuce = (score, point) => {
+  score = 'Deuce'
+
   if (point < 3) {
     score = scores[point]
     score += '-All'
-  }
-
-  if (point > 2) {
-    score = 'Deuce'
   }
 
   return score
