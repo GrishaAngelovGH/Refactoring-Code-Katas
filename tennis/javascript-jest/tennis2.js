@@ -6,13 +6,13 @@ const scores = {
   2: 'Thirty'
 }
 
-const determineEqualScoreOrDeuce = (score, p1Point, p2Point) => {
-  if (p1Point === p2Point && p1Point < 3) {
-    score = scores[p1Point]
+const determineEqualScoreOrDeuce = (score, point) => {
+  if (point < 3) {
+    score = scores[point]
     score += '-All'
   }
 
-  if (p1Point === p2Point && p1Point > 2) {
+  if (point > 2) {
     score = 'Deuce'
   }
 
@@ -22,7 +22,7 @@ const determineEqualScoreOrDeuce = (score, p1Point, p2Point) => {
 const getScore = (p1Point, p2Point) => {
   let score = ''
 
-  score = determineEqualScoreOrDeuce(score, p1Point, p2Point)
+  score = p1Point === p2Point && determineEqualScoreOrDeuce(score, p1Point)
 
   var P1res
   var P2res
