@@ -1,20 +1,19 @@
 'use strict'
 
+const scores = {
+  0: 'Love',
+  1: 'Fifteen',
+  2: 'Thirty'
+}
+
 const getScore = (p1Point, p2Point) => {
-  var score = ''
+  let score = ''
 
   if (p1Point === p2Point && p1Point < 3) {
-    if (p1Point === 0) {
-      score = 'Love'
-    }
-    if (p1Point === 1) {
-      score = 'Fifteen'
-    }
-    if (p1Point === 2) {
-      score = 'Thirty'
-    }
+    score = scores[p1Point]
     score += '-All'
   }
+
   if (p1Point === p2Point && p1Point > 2) {
     score = 'Deuce'
   }
