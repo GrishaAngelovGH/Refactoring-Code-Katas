@@ -25,35 +25,20 @@ const getScore = (p1Point, p2Point) => {
 
   score = p1Point === p2Point && determineEqualScoreOrDeuce(score, p1Point)
 
-  let p1Res
-  let p2Res
-
   if (p1Point > 0 && p2Point === 0) {
-    p1Res = scores[p1Point]
-
-    p2Res = 'Love'
-    score = p1Res + '-' + p2Res
+    score = `${scores[p1Point]}-${scores[p2Point]}`
   }
 
   if (p2Point > 0 && p1Point === 0) {
-    p2Res = scores[p2Point]
-
-    p1Res = 'Love'
-    score = p1Res + '-' + p2Res
+    score = `${scores[p1Point]}-${scores[p2Point]}`
   }
 
   if (p1Point > p2Point && p1Point < 4) {
-    p1Res = scores[p1Point]
-    p2Res = scores[p2Point]
-
-    score = p1Res + '-' + p2Res
+    score = `${scores[p1Point]}-${scores[p2Point]}`
   }
 
   if (p2Point > p1Point && p2Point < 4) {
-    p1Res = scores[p1Point]
-    p2Res = scores[p2Point]
-
-    score = p1Res + '-' + p2Res
+    score = `${scores[p1Point]}-${scores[p2Point]}`
   }
 
   if (p1Point > p2Point && p2Point >= 3) {
