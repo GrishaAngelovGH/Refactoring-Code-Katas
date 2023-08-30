@@ -29,8 +29,10 @@ const determineAdvantageOrWin = (m_score1, m_score2) => {
   return determinedAdvantage || determinedWin
 }
 
-const determinePoints = (score, m_score1, m_score2, tempScore) => {
-  tempScore = m_score1
+const determinePoints = (m_score1, m_score2) => {
+  let score = ''
+  let tempScore = m_score1
+
   score += points[tempScore]
 
   for (var i = 1; i < 2; i++) {
@@ -45,7 +47,6 @@ const determinePoints = (score, m_score1, m_score2, tempScore) => {
 
 const getScore = (m_score1, m_score2) => {
   let score = ''
-  let tempScore = 0
 
   if (m_score1 === m_score2) {
     score = getEqualScoreOrDeuce(m_score1)
@@ -56,7 +57,7 @@ const getScore = (m_score1, m_score2) => {
   }
 
   if (m_score1 !== m_score2 && !(m_score1 >= 4 || m_score2 >= 4)) {
-    score = determinePoints(score, m_score1, m_score2, tempScore)
+    score = determinePoints(m_score1, m_score2)
   }
 
   return score
