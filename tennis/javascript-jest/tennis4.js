@@ -12,12 +12,14 @@ class TennisGame {
     this.serverScore = serverScore
     this.receiverScore = receiverScore
 
-    let result = new Deuce(
-      this, new GameServer(
-        this, new GameReceiver(
+    const result = new Deuce(
+      this, new Player(
+        this, new Player(
           this, new AdvantageServer(
             this, new AdvantageReceiver(
-              this, new DefaultResult(this)))))).getResult()
+              this, new DefaultResult(this)))))
+    ).getResult()
+
     return result.format()
   }
 
@@ -74,7 +76,7 @@ class Deuce {
   }
 }
 
-class GameServer {
+class Player {
   constructor(game, nextResult) {
     this.game = game
     this.nextResult = nextResult
@@ -84,20 +86,11 @@ class GameServer {
     if (this.game.serverHasWon()) {
       return new TennisResult('Win for ' + this.game.server, '')
     }
-    return this.nextResult.getResult()
-  }
-}
 
-class GameReceiver {
-  constructor(game, nextResult) {
-    this.game = game
-    this.nextResult = nextResult
-  }
-
-  getResult() {
     if (this.game.receiverHasWon()) {
       return new TennisResult('Win for ' + this.game.receiver, '')
     }
+
     return this.nextResult.getResult()
   }
 }
@@ -142,8 +135,8 @@ class DefaultResult {
 }
 
 
-function getScore(serverScore, receiverScore) {
-  let game = new TennisGame('player1', 'player2')
+const getScore = (serverScore, receiverScore) => {
+  const game = new TennisGame('player1', 'player2')
   return game.getScore(serverScore, receiverScore)
 }
 
