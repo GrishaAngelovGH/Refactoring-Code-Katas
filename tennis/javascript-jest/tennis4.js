@@ -15,8 +15,8 @@ class TennisGame {
     const result = new Deuce(
       this, new Player(
         this, new Player(
-          this, new AdvantageServer(
-            this, new AdvantageReceiver(
+          this, new AdvantagePlayer(
+            this, new AdvantagePlayer(
               this, new DefaultResult(this)))))
     ).getResult()
 
@@ -95,7 +95,7 @@ class Player {
   }
 }
 
-class AdvantageServer {
+class AdvantagePlayer {
   constructor(game, nextResult) {
     this.game = game
     this.nextResult = nextResult
@@ -105,20 +105,11 @@ class AdvantageServer {
     if (this.game.serverHasAdvantage()) {
       return new TennisResult('Advantage ' + this.game.server, '')
     }
-    return this.nextResult.getResult()
-  }
-}
 
-class AdvantageReceiver {
-  constructor(game, nextResult) {
-    this.game = game
-    this.nextResult = nextResult
-  }
-
-  getResult() {
     if (this.game.receiverHasAdvantage()) {
       return new TennisResult('Advantage ' + this.game.receiver, '')
     }
+
     return this.nextResult.getResult()
   }
 }
