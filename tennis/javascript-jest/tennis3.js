@@ -1,20 +1,31 @@
 'use strict'
 
-function getScore(p1, p2) {
-  var s
-  let p1N = 'player1'
-  let p2N = 'player2'
-  if ((p1 < 4 && p2 < 4) && (p1 + p2 < 6)) {
-    var p = ['Love', 'Fifteen', 'Thirty', 'Forty']
-    s = p[p1]
-    return (p1 === p2) ? s + '-All' : s + '-' + p[p2]
-  } else {
-    if (p1 === p2) {
+const points = ['Love', 'Fifteen', 'Thirty', 'Forty']
+
+const determineScore = (score, p1Point, p2Point) => {
+  if ((p1Point < 4 && p2Point < 4) && (p1Point + p2Point < 6)) {
+    score = points[p1Point]
+  }
+
+  return (p1Point === p2Point) ? score + '-All' : score + '-' + points[p2Point]
+}
+
+const getScore = (p1Point, p2Point) => {
+  let score
+  let p1Name = 'player1'
+  let p2Name = 'player2'
+
+  score = determineScore(score, p1Point, p2Point)
+
+  if (!((p1Point < 4 && p2Point < 4) && (p1Point + p2Point < 6))) {
+    if (p1Point === p2Point) {
       return 'Deuce'
     }
-    s = p1 > p2 ? p1N : p2N
-    return ((p1 - p2) * (p1 - p2) === 1) ? 'Advantage ' + s : 'Win for ' + s
+    score = p1Point > p2Point ? p1Name : p2Name
+    return ((p1Point - p2Point) * (p1Point - p2Point) === 1) ? 'Advantage ' + score : 'Win for ' + score
   }
+
+  return score
 }
 
 module.exports = getScore
