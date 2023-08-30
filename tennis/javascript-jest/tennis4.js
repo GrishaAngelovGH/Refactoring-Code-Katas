@@ -52,13 +52,11 @@ class TennisResult {
   }
 
   format() {
-    if ('' === this.receiverScore) {
+    if (!this.receiverScore) {
       return this.serverScore
     }
-    if (this.serverScore === this.receiverScore) {
-      return this.serverScore + '-All'
-    }
-    return this.serverScore + '-' + this.receiverScore
+
+    return this.serverScore === this.receiverScore ? `${this.serverScore}-All` : `${this.serverScore}-${this.receiverScore}`
   }
 }
 
