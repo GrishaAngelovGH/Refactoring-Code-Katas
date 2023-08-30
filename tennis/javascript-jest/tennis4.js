@@ -42,7 +42,6 @@ class TennisGame {
   isDeuce() {
     return this.serverScore >= 3 && this.receiverScore >= 3 && (this.serverScore === this.receiverScore)
   }
-
 }
 
 class TennisResult {
@@ -70,6 +69,7 @@ class Deuce {
     if (this.game.isDeuce()) {
       return new TennisResult('Deuce', '')
     }
+
     return this.nextResult.getResult()
   }
 }
@@ -82,11 +82,11 @@ class Player {
 
   getResult() {
     if (this.game.serverHasWon()) {
-      return new TennisResult('Win for ' + this.game.server, '')
+      return new TennisResult(`Win for ${this.game.server}`, '')
     }
 
     if (this.game.receiverHasWon()) {
-      return new TennisResult('Win for ' + this.game.receiver, '')
+      return new TennisResult(`Win for ${this.game.receiver}`, '')
     }
 
     return this.nextResult.getResult()
@@ -101,11 +101,11 @@ class AdvantagePlayer {
 
   getResult() {
     if (this.game.serverHasAdvantage()) {
-      return new TennisResult('Advantage ' + this.game.server, '')
+      return new TennisResult(`Advantage ${this.game.server}`, '')
     }
 
     if (this.game.receiverHasAdvantage()) {
-      return new TennisResult('Advantage ' + this.game.receiver, '')
+      return new TennisResult(`Advantage ${this.game.receiver}`, '')
     }
 
     return this.nextResult.getResult()
