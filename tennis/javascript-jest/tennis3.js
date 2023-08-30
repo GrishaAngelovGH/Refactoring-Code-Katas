@@ -7,7 +7,7 @@ const determineScore = (score, p1Point, p2Point) => {
     score = points[p1Point]
   }
 
-  return (p1Point === p2Point) ? score + '-All' : score + '-' + points[p2Point]
+  return (p1Point === p2Point) ? `${score}-All` : `${score}-${points[p2Point]}`
 }
 
 const determineDeuce = (p1Point, p2Point) => {
@@ -25,7 +25,7 @@ const determineAdvantageOrWin = (p1Point, p2Point) => {
 
   if (!((p1Point < 4 && p2Point < 4) && (p1Point + p2Point < 6))) {
     playerName = p1Point > p2Point ? p1Name : p2Name
-    return ((p1Point - p2Point) * (p1Point - p2Point) === 1) ? 'Advantage ' + playerName : 'Win for ' + playerName
+    return ((p1Point - p2Point) * (p1Point - p2Point) === 1) ? `Advantage ${playerName}` : `Win for ${playerName}`
   }
 
   return null
