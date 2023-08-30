@@ -29,12 +29,7 @@ const determinePoints = (score, p1Point, p2Point) => {
   return score
 }
 
-const getScore = (p1Point, p2Point) => {
-  let score = ''
-
-  score = p1Point === p2Point && determineEqualScoreOrDeuce(score, p1Point)
-  score = determinePoints(score, p1Point, p2Point)
-
+const determineAdvantage = (score, p1Point, p2Point) => {
   if (p1Point > p2Point && p2Point >= 3) {
     score = 'Advantage player1'
   }
@@ -42,6 +37,16 @@ const getScore = (p1Point, p2Point) => {
   if (p2Point > p1Point && p1Point >= 3) {
     score = 'Advantage player2'
   }
+
+  return score
+}
+
+const getScore = (p1Point, p2Point) => {
+  let score = ''
+
+  score = p1Point === p2Point && determineEqualScoreOrDeuce(score, p1Point)
+  score = determinePoints(score, p1Point, p2Point)
+  score = determineAdvantage(score, p1Point, p2Point)
 
   if (p1Point >= 4 && p2Point >= 0 && (p1Point - p2Point) >= 2) {
     score = 'Win for player1'
