@@ -7,8 +7,8 @@ const scores = {
   3: 'Forty'
 }
 
-const determineEqualScoreOrDeuce = (score, point) => {
-  score = 'Deuce'
+const determineEqualScoreOrDeuce = point => {
+  let score = 'Deuce'
 
   if (point < 3) {
     score = scores[point]
@@ -56,7 +56,7 @@ const determineWin = (score, p1Point, p2Point) => {
 const getScore = (p1Point, p2Point) => {
   let score = ''
 
-  score = p1Point === p2Point && determineEqualScoreOrDeuce(score, p1Point)
+  score = p1Point === p2Point && determineEqualScoreOrDeuce(p1Point)
   score = determinePoints(score, p1Point, p2Point)
   score = determineAdvantage(score, p1Point, p2Point)
   score = determineWin(score, p1Point, p2Point)
