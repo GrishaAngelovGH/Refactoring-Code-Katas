@@ -9,12 +9,15 @@ export class Receipt {
 
   public getTotalPrice(): number {
     let total = 0.0
-    for (let item of this.items) {
+
+    this.items.forEach(item => {
       total += item.totalPrice
-    }
-    for (let discount of this.discounts) {
+    })
+
+    this.discounts.forEach(discount => {
       total -= discount.discountAmount
-    }
+    })
+
     return total
   }
 
