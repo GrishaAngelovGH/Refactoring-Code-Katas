@@ -1,8 +1,6 @@
-import { Discount } from '../src/model/Discount'
 import { Product } from '../src/model/Product'
 import { ProductUnit } from '../src/model/ProductUnit'
 import { Receipt } from '../src/model/Receipt'
-import { ReceiptItem } from '../src/model/ReceiptItem'
 import { ShoppingCart } from '../src/model/ShoppingCart'
 import { SpecialOfferType } from '../src/model/SpecialOfferType'
 import { SupermarketCatalog } from '../src/model/SupermarketCatalog'
