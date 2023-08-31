@@ -1,6 +1,8 @@
+import { Discount } from '../src/model/Discount'
 import { Product } from '../src/model/Product'
 import { ProductUnit } from '../src/model/ProductUnit'
 import { Receipt } from '../src/model/Receipt'
+import { ReceiptItem } from '../src/model/ReceiptItem'
 import { ShoppingCart } from '../src/model/ShoppingCart'
 import { SpecialOfferType } from '../src/model/SpecialOfferType'
 import { SupermarketCatalog } from '../src/model/SupermarketCatalog'
@@ -9,23 +11,21 @@ import { FakeCatalog } from './FakeCatalog'
 
 const approvals = require('approvals')
 
-type Approvals = {
-  verify: (s: string) => void
-  verifyAsJSON: (o: Object) => void
-}
-
 describe('Supermarket', function () {
 
   approvals.mocha()
 
-  it('TODO decide what to specify', function (this: any) {
+  it('should generate receipt from shopping cart items', function (this: any) {
     const catalog: SupermarketCatalog = new FakeCatalog()
+    const cart: ShoppingCart = new ShoppingCart()
+
     const toothbrush: Product = new Product('toothbrush', ProductUnit.Each)
-    catalog.addProduct(toothbrush, 0.99)
     const apples: Product = new Product('apples', ProductUnit.Kilo)
+
+    catalog.addProduct(toothbrush, 0.99)
     catalog.addProduct(apples, 1.99)
 
-    const cart: ShoppingCart = new ShoppingCart()
+    cart.addItemQuantity(toothbrush, 4)
     cart.addItemQuantity(apples, 2.5)
 
     const teller: Teller = new Teller(catalog)
@@ -33,8 +33,10 @@ describe('Supermarket', function () {
 
     const receipt: Receipt = teller.checksOutArticlesFrom(cart)
 
-    // Todo: complete this test
-    this.verifyAsJSON({})
+    this.verifyAsJSON({
+      items: receipt.getItems(),
+      discounts: receipt.getDiscounts()
+    })
   })
 
 })
