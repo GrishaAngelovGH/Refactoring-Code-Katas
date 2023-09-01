@@ -59,4 +59,28 @@ describe('Supermarket', function () {
       discounts: receipt.getDiscounts()
     })
   })
+
+  it('should generate receipt from shopping cart items with special offer 2 for amount', function (this: any) {
+    const catalog: SupermarketCatalog = new FakeCatalog()
+    const cart: ShoppingCart = new ShoppingCart()
+
+    const toothbrush: Product = new Product('toothbrush', ProductUnit.Each)
+    const apples: Product = new Product('apples', ProductUnit.Kilo)
+
+    catalog.addProduct(toothbrush, 0.99)
+    catalog.addProduct(apples, 1.99)
+
+    cart.addItemQuantity(toothbrush, 4)
+    cart.addItemQuantity(apples, 2.5)
+
+    const teller: Teller = new Teller(catalog)
+    teller.addSpecialOffer(SpecialOfferType.TwoForAmount, toothbrush, 3)
+
+    const receipt: Receipt = teller.checksOutArticlesFrom(cart)
+
+    this.verifyAsJSON({
+      items: receipt.getItems(),
+      discounts: receipt.getDiscounts()
+    })
+  })
 })
