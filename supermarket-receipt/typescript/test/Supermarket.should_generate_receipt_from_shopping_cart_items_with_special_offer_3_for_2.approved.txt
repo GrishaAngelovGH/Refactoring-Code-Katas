@@ -1,5 +1,14 @@
 {
-  "discounts": [],
+  "discounts": [
+    {
+      "description": "3 for 2",
+      "discountAmount": 0.9900000000000002,
+      "product": {
+        "name": "toothbrush",
+        "unit": 1
+      }
+    }
+  ],
   "items": [
     {
       "price": 0.99,

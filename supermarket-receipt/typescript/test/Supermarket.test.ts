@@ -27,7 +27,6 @@ describe('Supermarket', function () {
     cart.addItemQuantity(apples, 2.5)
 
     const teller: Teller = new Teller(catalog)
-    teller.addSpecialOffer(SpecialOfferType.TenPercentDiscount, toothbrush, 10.0)
 
     const receipt: Receipt = teller.checksOutArticlesFrom(cart)
 
@@ -37,4 +36,27 @@ describe('Supermarket', function () {
     })
   })
 
+  it('should generate receipt from shopping cart items with special offer 3 for 2', function (this: any) {
+    const catalog: SupermarketCatalog = new FakeCatalog()
+    const cart: ShoppingCart = new ShoppingCart()
+
+    const toothbrush: Product = new Product('toothbrush', ProductUnit.Each)
+    const apples: Product = new Product('apples', ProductUnit.Kilo)
+
+    catalog.addProduct(toothbrush, 0.99)
+    catalog.addProduct(apples, 1.99)
+
+    cart.addItemQuantity(toothbrush, 4)
+    cart.addItemQuantity(apples, 2.5)
+
+    const teller: Teller = new Teller(catalog)
+    teller.addSpecialOffer(SpecialOfferType.ThreeForTwo, toothbrush, 5)
+
+    const receipt: Receipt = teller.checksOutArticlesFrom(cart)
+
+    this.verifyAsJSON({
+      items: receipt.getItems(),
+      discounts: receipt.getDiscounts()
+    })
+  })
 })
