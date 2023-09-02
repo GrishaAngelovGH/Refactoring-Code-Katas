@@ -1,0 +1,32 @@
+{
+  "discounts": [
+    {
+      "description": "5 for 7",
+      "discountAmount": -2.05,
+      "product": {
+        "name": "toothbrush",
+        "unit": 1
+      }
+    }
+  ],
+  "items": [
+    {
+      "price": 0.99,
+      "product": {
+        "name": "toothbrush",
+        "unit": 1
+      },
+      "quantity": 5,
+      "totalPrice": 4.95
+    },
+    {
+      "price": 1.99,
+      "product": {
+        "name": "apples",
+        "unit": 0
+      },
+      "quantity": 2.5,
+      "totalPrice": 4.975
+    }
+  ]
+}
