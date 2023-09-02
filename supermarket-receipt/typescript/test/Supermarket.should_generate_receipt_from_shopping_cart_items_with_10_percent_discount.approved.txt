@@ -1,0 +1,32 @@
+{
+  "discounts": [
+    {
+      "description": "10% off",
+      "discountAmount": 0.396,
+      "product": {
+        "name": "toothbrush",
+        "unit": 1
+      }
+    }
+  ],
+  "items": [
+    {
+      "price": 0.99,
+      "product": {
+        "name": "toothbrush",
+        "unit": 1
+      },
+      "quantity": 4,
+      "totalPrice": 3.96
+    },
+    {
+      "price": 1.99,
+      "product": {
+        "name": "apples",
+        "unit": 0
+      },
+      "quantity": 2.5,
+      "totalPrice": 4.975
+    }
+  ]
+}
