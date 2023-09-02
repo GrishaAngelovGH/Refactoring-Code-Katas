@@ -8,12 +8,18 @@ import { SpecialOfferType } from './SpecialOfferType'
 import { SupermarketCatalog } from './SupermarketCatalog'
 
 type ProductQuantities = { [productName: string]: ProductQuantity }
+type SpecialOffers = { [productName: string]: number }
 export type OffersByProduct = { [productName: string]: Offer }
 
 export class ShoppingCart {
 
   private readonly items: ProductQuantity[] = []
   _productQuantities: ProductQuantities = {}
+  _specialOffers: SpecialOffers = {
+    [SpecialOfferType.ThreeForTwo]: 3,
+    [SpecialOfferType.TwoForAmount]: 2,
+    [SpecialOfferType.FiveForAmount]: 5
+  }
 
   getItems(): ProductQuantity[] {
     return _.clone(this.items)
@@ -25,6 +31,34 @@ export class ShoppingCart {
 
   productQuantities(): ProductQuantities {
     return this._productQuantities
+  }
+
+  applyDiscount(offer: Offer, quantity: number, unitPrice: number, product: Product): (Discount | null) {
+    const specialOfferCoefficient = this._specialOffers[offer.offerType] ? this._specialOffers[offer.offerType] : 1
+
+    const numberOfXs = Math.floor(quantity / specialOfferCoefficient)
+
+    if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
+      return new Discount(product, offer.argument + '% off', quantity * unitPrice * offer.argument / 100.0)
+    }
+
+    if (offer.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
+      const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantity % 5 * unitPrice)
+      return new Discount(product, specialOfferCoefficient + ' for ' + offer.argument, discountTotal)
+    }
+
+    if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
+      const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantity % 3 * unitPrice)
+      return new Discount(product, '3 for 2', discountAmount)
+    }
+
+    if (quantity >= 2) {
+      const total = offer.argument * Math.floor(quantity / specialOfferCoefficient) + quantity % 2 * unitPrice
+      const discountN = unitPrice * quantity - total
+      return new Discount(product, '2 for ' + offer.argument, discountN)
+    }
+
+    return null
   }
 
   public addItemQuantity(product: Product, quantity: number): void {
@@ -48,34 +82,8 @@ export class ShoppingCart {
       if (offers[productName]) {
         const offer: Offer = offers[productName]
         const unitPrice: number = catalog.getUnitPrice(product)
+        const discount: Discount | null = this.applyDiscount(offer, quantity, unitPrice, product)
 
-        let discount: Discount | null = null
-        let x = 1
-
-        if (offer.offerType == SpecialOfferType.ThreeForTwo) {
-          x = 3
-        } else if (offer.offerType == SpecialOfferType.TwoForAmount) {
-          x = 2
-          if (quantity >= 2) {
-            const total = offer.argument * Math.floor(quantity / x) + quantity % 2 * unitPrice
-            const discountN = unitPrice * quantity - total
-            discount = new Discount(product, '2 for ' + offer.argument, discountN)
-          }
-        } if (offer.offerType == SpecialOfferType.FiveForAmount) {
-          x = 5
-        }
-        const numberOfXs = Math.floor(quantity / x)
-        if (offer.offerType == SpecialOfferType.ThreeForTwo && quantity > 2) {
-          const discountAmount = quantity * unitPrice - ((numberOfXs * 2 * unitPrice) + quantity % 3 * unitPrice)
-          discount = new Discount(product, '3 for 2', discountAmount)
-        }
-        if (offer.offerType == SpecialOfferType.TenPercentDiscount) {
-          discount = new Discount(product, offer.argument + '% off', quantity * unitPrice * offer.argument / 100.0)
-        }
-        if (offer.offerType == SpecialOfferType.FiveForAmount && quantity >= 5) {
-          const discountTotal = unitPrice * quantity - (offer.argument * numberOfXs + quantity % 5 * unitPrice)
-          discount = new Discount(product, x + ' for ' + offer.argument, discountTotal)
-        }
         if (discount != null)
           receipt.addDiscount(discount)
       }
