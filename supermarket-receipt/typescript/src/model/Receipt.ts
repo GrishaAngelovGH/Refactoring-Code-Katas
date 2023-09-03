@@ -1,11 +1,12 @@
+import * as _ from 'lodash'
+import { BundleDiscount } from './BundleDiscount'
 import { Discount } from './Discount'
 import { Product } from './Product'
 import { ReceiptItem } from './ReceiptItem'
-import * as _ from 'lodash'
 
 export class Receipt {
   private items: ReceiptItem[] = []
-  private discounts: Discount[] = []
+  private discounts: (Discount | BundleDiscount)[] = []
 
   public getTotalPrice(): number {
     let total = 0.0
@@ -29,11 +30,11 @@ export class Receipt {
     return _.clone(this.items)
   }
 
-  public addDiscount(discount: Discount): void {
+  public addDiscount(discount: Discount | BundleDiscount): void {
     this.discounts.push(discount)
   }
 
-  public getDiscounts(): Discount[] {
+  public getDiscounts(): Discount[] | BundleDiscount[] {
     return this.discounts
   }
 }

@@ -1,3 +1,3 @@
 export enum SpecialOfferType {
-  ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount
+  ThreeForTwo, TenPercentDiscount, TwoForAmount, FiveForAmount, Bundle
 }

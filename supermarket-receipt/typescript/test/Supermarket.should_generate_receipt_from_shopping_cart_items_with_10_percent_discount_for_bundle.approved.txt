@@ -1,0 +1,32 @@
+{
+  "discounts": [
+    {
+      "description": "10% off for bundle",
+      "discountAmount": 0.798,
+      "product": {
+        "name": "Bundle",
+        "unit": 1
+      }
+    }
+  ],
+  "items": [
+    {
+      "price": 4.99,
+      "product": {
+        "name": "coffee",
+        "unit": 1
+      },
+      "quantity": 1,
+      "totalPrice": 4.99
+    },
+    {
+      "price": 2.99,
+      "product": {
+        "name": "milk",
+        "unit": 1
+      },
+      "quantity": 1,
+      "totalPrice": 2.99
+    }
+  ]
+}

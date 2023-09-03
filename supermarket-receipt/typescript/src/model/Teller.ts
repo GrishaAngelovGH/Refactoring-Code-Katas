@@ -1,5 +1,7 @@
+import { BundleOffer } from './BundleOffer'
 import { Offer } from './Offer'
 import { Product } from './Product'
+import { ProductQuantity } from './ProductQuantity'
 import { Receipt } from './Receipt'
 import { OffersByProduct, ShoppingCart } from './ShoppingCart'
 import { SpecialOfferType } from './SpecialOfferType'
@@ -12,6 +14,10 @@ export class Teller {
 
   public addSpecialOffer(offerType: SpecialOfferType, product: Product, argument: number): void {
     this.offers[product.name] = new Offer(offerType, product, argument)
+  }
+
+  public addSpecialBundleOffer(products: Product[], productQuantities: ProductQuantity[], argument: number): void {
+    this.offers['bundle'] = new BundleOffer(SpecialOfferType.Bundle, products, productQuantities, argument)
   }
 
   public checksOutArticlesFrom(cart: ShoppingCart): Receipt {
