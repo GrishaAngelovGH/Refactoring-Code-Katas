@@ -51,4 +51,12 @@ describe('ReceiptPrinter', () => {
     const expected = 'oranges                             1.20\napples                              0.70\n10% off for bundle(Bundle)         -0.19\n\nTotal:                              1.71'
     expect(actual).to.equal(expected)
   })
+
+  it('should print receipt as HTML', () => {
+    const receiptPrinter = new ReceiptPrinter()
+    const receipt = providePredefinedReceipt()
+    const actual = receiptPrinter.printReceiptAsHTML(receipt)
+    const expected = '\n      <html>\n        <header>\n          <title>HTML Receipt</title>\n        </header>\n        <body>\n          <table>\n            <thead>\n              <tr>\n                <th>Item</th>\n              </tr>\n            </thead>\n            <tbody>\n              <tr><td>toothbrush                          7.96\n  1.99 * 4\n</td></tr>,<tr><td>oranges                             7.20\n  1.20 * 6\n</td></tr>,<tr><td>apples                              3.50\n  0.70 * 5.000\n</td></tr>\n              <tr><td>fresh fruits discount(oranges)     -5.50\n</td></tr>\n            </tbody>\n          </table>\n          <p>Total:                             13.16</p>\n        </body>\n      </html>\n    '
+    expect(actual).to.equal(expected)
+  })
 })

@@ -8,6 +8,51 @@ export class ReceiptPrinter {
   public printReceipt(receipt: Receipt): string {
     let result = ''
 
+    this.formatLines(receipt).forEach(line => { result += line })
+
+    this.formatDiscounts(receipt).forEach(line => { result += line })
+
+    result += '\n'
+
+    const pricePresentation = this.format2Decimals(receipt.getTotalPrice())
+    const total = 'Total: '
+    const whitespace = this.getWhitespace(this.columns - total.length - pricePresentation.length)
+
+    result += `${total}${whitespace}${pricePresentation}`
+
+    return result
+  }
+
+  public printReceiptAsHTML(receipt: Receipt): string {
+    const pricePresentation = this.format2Decimals(receipt.getTotalPrice())
+    const whitespace = this.getWhitespace(this.columns - 7 - pricePresentation.length)
+
+    return `
+      <html>
+        <header>
+          <title>HTML Receipt</title>
+        </header>
+        <body>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${this.formatLines(receipt).map(line => `<tr><td>${line}</td></tr>`)}
+              ${this.formatDiscounts(receipt).map(line => `<tr><td>${line}</td></tr>`)}
+            </tbody>
+          </table>
+          <p>Total: ${whitespace}${pricePresentation}</p>
+        </body>
+      </html>
+    `
+  }
+
+  private formatLines = (receipt: Receipt): string[] => {
+    const lines: string[] = []
+
     for (const item of receipt.getItems()) {
       const price = this.format2Decimals(item.totalPrice)
       const quantity = this.presentQuantity(item)
@@ -19,26 +64,24 @@ export class ReceiptPrinter {
         line += `  ${unitPrice} * ${quantity}\n`
       }
 
-      result += line
+      lines.push(line)
     }
+
+    return lines
+  }
+
+  private formatDiscounts = (receipt: Receipt): string[] => {
+    const lines: string[] = []
 
     for (const discount of receipt.getDiscounts()) {
       const productPresentation = discount.product.name
       const pricePresentation = this.format2Decimals(discount.discountAmount)
       const description = discount.description
 
-      result += `${description}(${productPresentation})${this.getWhitespace(this.columns - 3 - productPresentation.length - description.length - pricePresentation.length)}-${pricePresentation}\n`
+      lines.push(`${description}(${productPresentation})${this.getWhitespace(this.columns - 3 - productPresentation.length - description.length - pricePresentation.length)}-${pricePresentation}\n`)
     }
 
-    result += '\n'
-
-    const pricePresentation = this.format2Decimals(receipt.getTotalPrice())
-    const total = 'Total: '
-    const whitespace = this.getWhitespace(this.columns - total.length - pricePresentation.length)
-
-    result += `${total}${whitespace}${pricePresentation}`
-
-    return result
+    return lines
   }
 
   private format2Decimals(number: number) {
