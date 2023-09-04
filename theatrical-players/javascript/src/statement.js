@@ -30,6 +30,12 @@ const addVolumeCredits = (volumeCredits, type, audience) => {
   return volumeCredits
 }
 
+const appendBalance = (statement, totalAmount, volumeCredits) => {
+  statement += `Amount owed is ${format(totalAmount / 100)}\n`
+  statement += `You earned ${volumeCredits} credits\n`
+  return statement
+}
+
 function statement(invoice, plays) {
   let totalAmount = 0
   let volumeCredits = 0
@@ -44,12 +50,13 @@ function statement(invoice, plays) {
 
     volumeCredits = addVolumeCredits(volumeCredits, play.type, perf.audience)
 
-    // print line for this order
     result += ` ${play.name}: ${format(amount / 100)} (${perf.audience} seats)\n`
+
     totalAmount += amount
   }
-  result += `Amount owed is ${format(totalAmount / 100)}\n`
-  result += `You earned ${volumeCredits} credits\n`
+
+  result = appendBalance(result, totalAmount, volumeCredits)
+
   return result
 }
 
