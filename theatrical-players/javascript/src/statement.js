@@ -22,6 +22,14 @@ const types = {
   }
 }
 
+const addVolumeCredits = (volumeCredits, type, audience) => {
+  volumeCredits += Math.max(audience - 30, 0)
+
+  if ("comedy" === type) volumeCredits += Math.floor(audience / 5)
+
+  return volumeCredits
+}
+
 function statement(invoice, plays) {
   let totalAmount = 0
   let volumeCredits = 0
@@ -34,10 +42,8 @@ function statement(invoice, plays) {
 
     const amount = types[play.type](perf.audience)
 
-    // add volume credits
-    volumeCredits += Math.max(perf.audience - 30, 0)
-    // add extra credit for every ten comedy attendees
-    if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5)
+    volumeCredits = addVolumeCredits(volumeCredits, play.type, perf.audience)
+
     // print line for this order
     result += ` ${play.name}: ${format(amount / 100)} (${perf.audience} seats)\n`
     totalAmount += amount
