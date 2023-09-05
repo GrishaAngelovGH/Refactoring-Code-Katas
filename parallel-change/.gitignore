@@ -1,0 +1,9 @@
+build
+.gradle
+*.iml
+*.ipr
+.idea
+__pycache__
+vendor
+node_modules
+dist
