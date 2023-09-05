@@ -2,8 +2,7 @@
   "name": "emilybache-racing-car-kata",
   "description": "A kata to practice SOLID patterns",
   "version": "1.0.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/chai": "4.1.4",
     "@types/mocha": "5.2.5",
@@ -13,6 +12,6 @@
     "sinon": "3.2.1"
   },
   "scripts": {
-    "test": "mocha tire-pressure-monitoring-system-tests/*-test.js text-converter-tests/*-test.js turn-ticket-dispenser-tests/*-test.js telemetry-system-tests/*-test.js"
+    "test": "mocha --watch tire-pressure-monitoring-system-tests/*-test.js text-converter-tests/*-test.js turn-ticket-dispenser-tests/*-test.js telemetry-system-tests/*-test.js"
   }
 }
