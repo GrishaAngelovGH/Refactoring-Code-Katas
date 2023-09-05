@@ -1,13 +1,17 @@
 class ShoppingCart {
-	price = 0;
+  constructor() {
+    this.productPrices = []
+  }
 
-	add = (price) => (this.price = price);
+  add = productPrice => {
+    this.productPrices.push(productPrice)
+  }
 
-	calculateTotalPrice = () => this.price;
+  calculateTotalPrice = () => this.productPrices.reduce((a, b) => a + b)
 
-	numberOfProducts = () => 1;
+  numberOfProducts = () => this.productPrices.length
 
-	hasDiscount = () => this.price > 100;
+  hasDiscount = () => this.calculateTotalPrice() > 100
 }
 
-export default ShoppingCart;
+export default ShoppingCart
