@@ -26,5 +26,12 @@ describe('Tyre Pressure Monitoring System', function () {
       alarm.check()
       alarm.alarmOn().should.equal(false)
     })
+
+    it('should activate alarm for low pressure measurement', function () {
+      const alarm = new Alarm(new MockPressureSensor(15))
+
+      alarm.check()
+      alarm.alarmOn().should.equal(true)
+    })
   })
 })
