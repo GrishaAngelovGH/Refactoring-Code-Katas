@@ -1,10 +1,8 @@
-const Sensor = require('./sensor.js')
-
 class Alarm {
-  constructor() {
+  constructor(sensor) {
     this._lowPressureThreshold = 17
     this._highPressureThreshold = 21
-    this._sensor = new Sensor()
+    this._sensor = sensor
     this._alarmOn = false
   }
 
