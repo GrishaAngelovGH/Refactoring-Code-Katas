@@ -1,24 +1,19 @@
 // The reading of the pressure value from the sensor is simulated in this implementation.
 // Because the focus of the exercise is on the other class.
 
-Sensor = function() {
+class Sensor {
+  constructor() {
+    this.offset = 16
+  }
 
-	Sensor.Offset = function() { return 16; };
+  samplePressure() {
+    // placeholder implementation that simulate a real sensor in a real tire
+    return Math.floor(6 * Math.random() * Math.random())
+  }
 
-	Sensor.samplePressure = function() {
-		// placeholder implementation that simulate a real sensor in a real tire
-		var pressureTelemetryValue = Math.floor(6 * Math.random() * Math.random());
-		return pressureTelemetryValue;
-	};
-};
+  popNextPressurePsiValue() {
+    return this.offset + samplePressure()
+  }
+}
 
-Sensor.prototype = {
-
-	popNextPressurePsiValue: function() {
-		var pressureTelemetryValue = Sensor.samplePressure();
-
-		return Sensor.Offset() + pressureTelemetryValue;
-	}
-};
-
-module.exports = Sensor;
+module.exports = Sensor
