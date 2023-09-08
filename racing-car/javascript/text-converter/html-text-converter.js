@@ -9,12 +9,6 @@ class HtmlTextConverter {
   convertToHtml() {
     const text = fs.readFileSync(path.resolve(__dirname, this._filename)).toString()
 
-    const stashNextCharacterAndAdvanceThePointer = function () {
-      const c = text.charAt(i)
-      i += 1
-      return c
-    }
-
     const addANewLine = function () {
       const line = convertedLine.join('')
       html.push(line)
@@ -24,7 +18,8 @@ class HtmlTextConverter {
     let i = 0
     const html = []
     let convertedLine = []
-    let characterToConvert = stashNextCharacterAndAdvanceThePointer()
+    let characterToConvert = text.charAt(i)
+    i += 1
 
     while (i <= text.length) {
       switch (characterToConvert) {
@@ -44,7 +39,8 @@ class HtmlTextConverter {
           convertedLine.push(characterToConvert)
       }
 
-      characterToConvert = stashNextCharacterAndAdvanceThePointer()
+      characterToConvert = text.charAt(i)
+      i += 1
     }
 
     addANewLine()
