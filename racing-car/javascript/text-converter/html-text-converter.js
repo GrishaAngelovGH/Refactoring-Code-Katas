@@ -8,38 +8,35 @@ class HtmlTextConverter {
 
   convertToHtml() {
     const text = fs.readFileSync(path.resolve(__dirname, this._filename)).toString()
-
-    const addANewLine = function () {
-      const line = convertedLine.join('')
-      html.push(line)
-      convertedLine = []
-    }
-
     const html = []
     let convertedLine = []
 
-    for (let i = 0; i <= text.length; i++) {
-      const characterToConvert = text.charAt(i)
-
-      switch (characterToConvert) {
-        case '<':
-          convertedLine.push('&lt')
-          break
-        case '>':
-          convertedLine.push('&gt')
-          break
-        case '&':
-          convertedLine.push('&amp')
-          break
-        case '\n':
-          addANewLine()
-          break
-        default:
-          convertedLine.push(characterToConvert)
+    const specialCharacters = {
+      '<': () => {
+        convertedLine.push('&lt')
+      },
+      '>': () => {
+        convertedLine.push('&gt')
+      },
+      '&': () => {
+        convertedLine.push('&amp')
+      },
+      '\n': () => {
+        html.push(convertedLine.join(''))
+        convertedLine = []
       }
     }
 
-    addANewLine()
+    for (let i = 0; i <= text.length; i++) {
+      const characterToConvert = text.charAt(i)
+      const specialCharacter = specialCharacters[characterToConvert]
+
+      specialCharacter ?
+        specialCharacters[characterToConvert]() :
+        convertedLine.push(characterToConvert)
+    }
+
+    html.push(convertedLine.join(''))
 
     return html.join('<br />')
   }
