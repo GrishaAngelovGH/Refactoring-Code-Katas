@@ -21,16 +21,12 @@ class HtmlTextConverter {
       convertedLine = []
     }
 
-    const pushACharacterToTheOutput = function () {
-      convertedLine.push(characterToConvert)
-    }
-
     let i = 0
     const html = []
     let convertedLine = []
     let characterToConvert = stashNextCharacterAndAdvanceThePointer()
-    while (i <= text.length) {
 
+    while (i <= text.length) {
       switch (characterToConvert) {
         case '<':
           convertedLine.push('&lt')
@@ -45,13 +41,14 @@ class HtmlTextConverter {
           addANewLine()
           break
         default:
-          pushACharacterToTheOutput()
+          convertedLine.push(characterToConvert)
       }
 
       characterToConvert = stashNextCharacterAndAdvanceThePointer()
     }
 
     addANewLine()
+
     return html.join('<br />')
   }
 
