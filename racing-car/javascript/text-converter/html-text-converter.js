@@ -15,13 +15,12 @@ class HtmlTextConverter {
       convertedLine = []
     }
 
-    let i = 0
     const html = []
     let convertedLine = []
-    let characterToConvert = text.charAt(i)
-    i += 1
 
-    while (i <= text.length) {
+    for (let i = 0; i <= text.length; i++) {
+      const characterToConvert = text.charAt(i)
+
       switch (characterToConvert) {
         case '<':
           convertedLine.push('&lt')
@@ -38,9 +37,6 @@ class HtmlTextConverter {
         default:
           convertedLine.push(characterToConvert)
       }
-
-      characterToConvert = text.charAt(i)
-      i += 1
     }
 
     addANewLine()
