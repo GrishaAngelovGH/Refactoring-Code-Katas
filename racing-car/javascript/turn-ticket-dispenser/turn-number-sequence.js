@@ -1,9 +1,9 @@
+class TurnNumberSequence {
+  static _turnNumber = 0
 
-TurnNumberSequence = {
-	_turnNumber: 0,
-	getNextTurnNumber: function() {
-		return TurnNumberSequence._turnNumber++;
-	}
-};
+  static getNextTurnNumber() {
+    return ++TurnNumberSequence._turnNumber
+  }
+}
 
 module.exports = TurnNumberSequence;
