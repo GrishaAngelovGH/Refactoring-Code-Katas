@@ -1,42 +1,38 @@
-var TelemetryClient = require('./telemetry-client.js');
+const TelemetryClient = require('./telemetry-client.js')
 
-TelemetryDiagnosticControls = function() {
+class TelemetryDiagnosticControls {
+  constructor() {
+    this._diagnosticChannelConnectionString = function () { return '*111#' }
+    this._telemetryClient = new TelemetryClient()
+    this._diagnosticInfo = ''
+  }
 
-	this._diagnosticChannelConnectionString = function() { return '*111#'; };
+  readDiagnosticInfo() {
+    return this._diagnosticInfo
+  }
 
-	this._telemetryClient = new TelemetryClient();
-	this._diagnosticInfo = '';
-};
+  writeDiagnosticInfo(newValue) {
+    this._diagnosticInfo = newValue
+  }
 
-TelemetryDiagnosticControls.prototype = {
+  checkTransmission() {
+    this._diagnosticInfo = ''
 
-	readDiagnosticInfo: function() {
-		return this._diagnosticInfo;
-	},
+    this._telemetryClient.disconnect()
 
-	writeDiagnosticInfo: function(newValue) {
-		this._diagnosticInfo = newValue;
-	},
+    let retryLeft = 3
+    while (this._telemetryClient.onlineStatus() === false && retryLeft > 0) {
+      this._telemetryClient.connect(this._diagnosticChannelConnectionString)
+      retryLeft -= 1
+    }
 
-	checkTransmission: function() {
+    if (this._telemetryClient.onlineStatus() === false) {
+      throw 'Unable to connect'
+    }
 
-		this._diagnosticInfo = '';
+    this._telemetryClient.send(TelemetryClient.diagnosticMessage())
+    this._diagnosticInfo = this._telemetryClient.receive()
+  }
+}
 
-		this._telemetryClient.disconnect();
-
-		var retryLeft = 3;
-		while (this._telemetryClient.onlineStatus() === false && retryLeft > 0) {
-			this._telemetryClient.connect(this._diagnosticChannelConnectionString);
-			retryLeft -= 1;
-		}
-
-		if (this._telemetryClient.onlineStatus() === false) {
-			throw 'Unable to connect';
-		}
-
-		this._telemetryClient.send(TelemetryClient.diagnosticMessage());
-		this._diagnosticInfo = this._telemetryClient.receive();
-	}
-};
-
-module.exports = TelemetryDiagnosticControls;
+module.exports = TelemetryDiagnosticControls
