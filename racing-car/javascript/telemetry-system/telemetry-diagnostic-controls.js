@@ -1,9 +1,7 @@
-const TelemetryClient = require('./telemetry-client.js')
-
 class TelemetryDiagnosticControls {
-  constructor() {
+  constructor(telemetryClient) {
     this._diagnosticChannelConnectionString = function () { return '*111#' }
-    this._telemetryClient = new TelemetryClient()
+    this._telemetryClient = telemetryClient
     this._diagnosticInfo = ''
   }
 
@@ -30,7 +28,7 @@ class TelemetryDiagnosticControls {
       throw 'Unable to connect'
     }
 
-    this._telemetryClient.send(TelemetryClient.diagnosticMessage())
+    this._telemetryClient.send(this._telemetryClient.constructor.diagnosticMessage())
     this._diagnosticInfo = this._telemetryClient.receive()
   }
 }
