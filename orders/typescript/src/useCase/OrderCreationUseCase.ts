@@ -31,11 +31,7 @@ class OrderCreationUseCase {
         const taxedAmount: number = Math.round(unitaryTaxedAmount * itemRequest.getQuantity() * 100) / 100;
         const taxAmount: number = unitaryTax * itemRequest.getQuantity();
 
-        const orderItem: OrderItem = new OrderItem();
-        orderItem.setProduct(product);
-        orderItem.setQuantity(itemRequest.getQuantity());
-        orderItem.setTax(taxAmount);
-        orderItem.setTaxedAmount(taxedAmount);
+        const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity(), taxedAmount, taxAmount);
         order.items.push(orderItem);
 
         order.updateTotal(order.total + taxedAmount);
