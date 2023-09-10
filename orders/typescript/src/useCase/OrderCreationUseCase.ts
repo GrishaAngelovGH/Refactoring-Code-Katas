@@ -25,13 +25,13 @@ class OrderCreationUseCase {
     order.setTax(0);
 
     for (const itemRequest of request.getRequests()) {
-       const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
+      const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
 
       if (product === undefined) {
         throw new UnknownProductException();
       }
       else {
-        const unitaryTax: number = Math.round(product.getPrice() / 100 * product.getCategory().getTaxPercentage() * 100) / 100;
+        const unitaryTax: number = Math.round(product.getPrice() / 100 * product.getCategory().taxPercentage * 100) / 100;
         const unitaryTaxedAmount: number = Math.round((product.getPrice() + unitaryTax) * 100) / 100;
         const taxedAmount: number = Math.round(unitaryTaxedAmount * itemRequest.getQuantity() * 100) / 100;
         const taxAmount: number = unitaryTax * itemRequest.getQuantity();
