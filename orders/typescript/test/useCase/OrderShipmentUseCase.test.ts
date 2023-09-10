@@ -6,6 +6,7 @@ import OrderShipmentRequest from '../../src/useCase/OrderShipmentRequest'
 import OrderShipmentUseCase from '../../src/useCase/OrderShipmentUseCase'
 import TestOrderRepository from '../doubles/TestOrderRepository'
 import TestShipmentService from '../doubles/TestShipmentService'
+import OrderBuilder from './OrderBuilder'
 
 describe('OrderShipmentUseCase', () => {
   let orderRepository: TestOrderRepository
@@ -19,9 +20,7 @@ describe('OrderShipmentUseCase', () => {
   })
 
   it('shipApprovedOrder', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setId(1)
-    initialOrder.setStatus(OrderStatus.APPROVED)
+    let initialOrder: Order = new OrderBuilder().buildApprovedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderShipmentRequest = new OrderShipmentRequest()
@@ -29,18 +28,16 @@ describe('OrderShipmentUseCase', () => {
 
     useCase.run(request)
 
-    expect(orderRepository.getSavedOrder().getStatus()).toBe(OrderStatus.SHIPPED)
+    expect(orderRepository.getSavedOrder().status).toBe(OrderStatus.SHIPPED)
     expect(shipmentService.getShippedOrder()).toBe(initialOrder)
   })
 
   it('createdOrdersCannotBeShipped', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setId(2)
-    initialOrder.setStatus(OrderStatus.CREATED)
+    let initialOrder: Order = new OrderBuilder().buildCreatedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderShipmentRequest = new OrderShipmentRequest()
-    request.setOrderId(2)
+    request.setOrderId(1)
 
     expect(() => useCase.run(request)).toThrow(OrderCannotBeShippedException)
     expect(orderRepository.getSavedOrder()).toBe(null)
@@ -48,13 +45,11 @@ describe('OrderShipmentUseCase', () => {
   })
 
   it('rejectedOrdersCannotBeShipped', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setId(3)
-    initialOrder.setStatus(OrderStatus.REJECTED)
+    let initialOrder: Order = new OrderBuilder().buildRejectedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderShipmentRequest = new OrderShipmentRequest()
-    request.setOrderId(3)
+    request.setOrderId(1)
 
     expect(() => useCase.run(request)).toThrow(OrderCannotBeShippedException)
     expect(orderRepository.getSavedOrder()).toBe(null)
@@ -62,13 +57,11 @@ describe('OrderShipmentUseCase', () => {
   })
 
   it('shippedOrdersCannotBeShippedAgain', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setId(4)
-    initialOrder.setStatus(OrderStatus.SHIPPED)
+    let initialOrder: Order = new OrderBuilder().buildShippedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderShipmentRequest = new OrderShipmentRequest()
-    request.setOrderId(4)
+    request.setOrderId(1)
 
     expect(() => useCase.run(request)).toThrow(OrderCannotBeShippedTwiceException)
     expect(orderRepository.getSavedOrder()).toBe(null)

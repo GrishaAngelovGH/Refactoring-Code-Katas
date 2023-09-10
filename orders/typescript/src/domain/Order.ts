@@ -1,62 +1,35 @@
-import OrderItem from './OrderItem';
-import { OrderStatus } from './OrderStatus';
+import OrderItem from './OrderItem'
+import { OrderStatus } from './OrderStatus'
 
 class Order {
-  private total: number;
-  private currency: string;
-  private items: OrderItem[];
-  private tax: number;
-  private status: OrderStatus;
-  private id: number;
+  total: number
+  currency: string
+  items: OrderItem[]
+  tax: number
+  status: OrderStatus
+  id: number
 
-  public getTotal(): number {
-      return this.total;
+  constructor(total: number, currency: string, items: OrderItem[], tax: number, status: OrderStatus, id: number) {
+    this.total = total
+    this.currency = currency
+    this.items = items
+    this.tax = tax
+    this.status = status
+    this.id = id
   }
 
-  public setTotal(total: number): void  {
-      this.total = total;
+  updateStatus(newStatus: OrderStatus) {
+    this.status = newStatus
   }
 
-  public getCurrency(): string {
-      return this.currency;
+  updateTotal(newTotal: number) {
+    this.total = newTotal
   }
 
-  public setCurrency(currency: string): void {
-      this.currency = currency;
-  }
-
-  public getItems(): OrderItem[] {
-      return this.items;
-  }
-
-  public setItems(items: OrderItem[]): void {
-      this.items = items;
-  }
-
-  public getTax(): number {
-      return this.tax;
-  }
-
-  public setTax(tax: number): void {
-      this.tax = tax;
-  }
-
-  public getStatus(): OrderStatus {
-      return this.status;
-  }
-
-  public setStatus(status: OrderStatus): void {
-      this.status = status;
-  }
-
-  public getId(): number {
-      return this.id;
-  }
-
-  public setId(id: number): void {
-      this.id = id;
+  updateTax(newTax: number) {
+    this.tax = newTax
   }
 }
 
-export default Order;
+export default Order
 

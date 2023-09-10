@@ -10,7 +10,7 @@ class OrderShipmentUseCase {
   private readonly orderRepository: OrderRepository;
   private readonly shipmentService: ShipmentService;
 
-  public constructor (orderRepository: OrderRepository, shipmentService: ShipmentService) {
+  public constructor(orderRepository: OrderRepository, shipmentService: ShipmentService) {
     this.orderRepository = orderRepository;
     this.shipmentService = shipmentService;
   }
@@ -18,17 +18,17 @@ class OrderShipmentUseCase {
   public run(request: OrderShipmentRequest): void {
     const order: Order = this.orderRepository.getById(request.getOrderId());
 
-    if (order.getStatus() === OrderStatus.CREATED || order.getStatus() === OrderStatus.REJECTED) {
+    if (order.status === OrderStatus.CREATED || order.status === OrderStatus.REJECTED) {
       throw new OrderCannotBeShippedException();
     }
 
-    if (order.getStatus() === OrderStatus.SHIPPED) {
+    if (order.status === OrderStatus.SHIPPED) {
       throw new OrderCannotBeShippedTwiceException();
     }
 
     this.shipmentService.ship(order);
 
-    order.setStatus(OrderStatus.SHIPPED);
+    order.updateStatus(OrderStatus.SHIPPED);
     this.orderRepository.save(order);
   }
 }

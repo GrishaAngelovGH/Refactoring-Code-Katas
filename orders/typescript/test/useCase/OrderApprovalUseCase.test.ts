@@ -7,6 +7,8 @@ import RejectedOrderCannotBeApprovedException from '../../src/useCase/RejectedOr
 import ShippedOrdersCannotBeChangedException from '../../src/useCase/ShippedOrdersCannotBeChangedException'
 import TestOrderRepository from '../doubles/TestOrderRepository'
 
+import OrderBuilder from './OrderBuilder'
+
 describe('OrderApprovalUseCase', () => {
   let orderRepository: TestOrderRepository
   let useCase: OrderApprovalUseCase
@@ -17,9 +19,7 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('approvedExistingOrder', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.CREATED)
-    initialOrder.setId(1)
+    let initialOrder: Order = new OrderBuilder().buildCreatedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderApprovalRequest = new OrderApprovalRequest()
@@ -29,13 +29,11 @@ describe('OrderApprovalUseCase', () => {
     useCase.run(request)
 
     const savedOrder: Order = orderRepository.getSavedOrder()
-    expect(savedOrder.getStatus()).toBe(OrderStatus.APPROVED)
+    expect(savedOrder.status).toBe(OrderStatus.APPROVED)
   })
 
   it('rejectedExistingOrder', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.CREATED)
-    initialOrder.setId(1)
+    let initialOrder: Order = new OrderBuilder().buildCreatedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderApprovalRequest = new OrderApprovalRequest()
@@ -45,13 +43,11 @@ describe('OrderApprovalUseCase', () => {
     useCase.run(request)
 
     const savedOrder: Order = orderRepository.getSavedOrder()
-    expect(savedOrder.getStatus()).toBe(OrderStatus.REJECTED)
+    expect(savedOrder.status).toBe(OrderStatus.REJECTED)
   })
 
   it('cannotApproveRejectedOrder', () => {
-    const initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.REJECTED)
-    initialOrder.setId(1)
+    const initialOrder: Order = new OrderBuilder().buildRejectedOrder()
     orderRepository.addOrder(initialOrder)
 
     const request: OrderApprovalRequest = new OrderApprovalRequest()
@@ -63,9 +59,7 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('cannotRejectApprovedOrder', () => {
-    const initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.APPROVED)
-    initialOrder.setId(1)
+    const initialOrder: Order = new OrderBuilder().buildApprovedOrder()
     orderRepository.addOrder(initialOrder)
 
     const request: OrderApprovalRequest = new OrderApprovalRequest()
@@ -77,9 +71,7 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('shippedOrdersCannotBeApproved', () => {
-    const initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.SHIPPED)
-    initialOrder.setId(1)
+    const initialOrder: Order = new OrderBuilder().buildShippedOrder()
     orderRepository.addOrder(initialOrder)
 
     const request: OrderApprovalRequest = new OrderApprovalRequest()
@@ -91,9 +83,7 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('shippedOrdersCannotBeRejected', () => {
-    let initialOrder: Order = new Order()
-    initialOrder.setStatus(OrderStatus.SHIPPED)
-    initialOrder.setId(1)
+    let initialOrder: Order = new OrderBuilder().buildShippedOrder()
     orderRepository.addOrder(initialOrder)
 
     let request: OrderApprovalRequest = new OrderApprovalRequest()

@@ -17,12 +17,7 @@ class OrderCreationUseCase {
   }
 
   public run(request: SellItemsRequest): void {
-    const order: Order = new Order();
-    order.setStatus(OrderStatus.CREATED);
-    order.setItems([]);
-    order.setCurrency('EUR');
-    order.setTotal(0);
-    order.setTax(0);
+    const order: Order = new Order(0, 'EUR', [], 0, OrderStatus.CREATED, 1);
 
     for (const itemRequest of request.getRequests()) {
       const product: Product = this.productCatalog.getByName(itemRequest.getProductName());
@@ -41,10 +36,10 @@ class OrderCreationUseCase {
         orderItem.setQuantity(itemRequest.getQuantity());
         orderItem.setTax(taxAmount);
         orderItem.setTaxedAmount(taxedAmount);
-        order.getItems().push(orderItem);
+        order.items.push(orderItem);
 
-        order.setTotal(order.getTotal() + taxedAmount);
-        order.setTax(order.getTax() + taxAmount);
+        order.updateTotal(order.total + taxedAmount);
+        order.updateTax(order.tax + taxAmount);
       }
     }
 

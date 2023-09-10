@@ -9,27 +9,27 @@ import ShippedOrdersCannotBeChangedException from './ShippedOrdersCannotBeChange
 class OrderApprovalUseCase {
   private readonly orderRepository: OrderRepository;
 
-  public constructor(orderRepository: OrderRepository){
-      this.orderRepository = orderRepository;
+  public constructor(orderRepository: OrderRepository) {
+    this.orderRepository = orderRepository;
   }
 
   public run(request: OrderApprovalRequest): void {
-      const order: Order = this.orderRepository.getById(request.getOrderId());
+    const order: Order = this.orderRepository.getById(request.getOrderId());
 
-      if (order.getStatus() === OrderStatus.SHIPPED) {
-          throw new ShippedOrdersCannotBeChangedException();
-      }
+    if (order.status === OrderStatus.SHIPPED) {
+      throw new ShippedOrdersCannotBeChangedException();
+    }
 
-      if (request.isApproved() && order.getStatus() === OrderStatus.REJECTED) {
-          throw new RejectedOrderCannotBeApprovedException();
-      }
+    if (request.isApproved() && order.status === OrderStatus.REJECTED) {
+      throw new RejectedOrderCannotBeApprovedException();
+    }
 
-      if (!request.isApproved() && order.getStatus() === OrderStatus.APPROVED) {
-          throw new ApprovedOrderCannotBeRejectedException();
-      }
+    if (!request.isApproved() && order.status === OrderStatus.APPROVED) {
+      throw new ApprovedOrderCannotBeRejectedException();
+    }
 
-      order.setStatus(request.isApproved() ? OrderStatus.APPROVED : OrderStatus.REJECTED);
-      this.orderRepository.save(order);
+    order.updateStatus(request.isApproved() ? OrderStatus.APPROVED : OrderStatus.REJECTED);
+    this.orderRepository.save(order);
   }
 }
 
