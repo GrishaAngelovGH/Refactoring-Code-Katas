@@ -14,6 +14,10 @@ class Product {
   calculateUnitaryTax() {
     return Math.round(this.price / 100 * this.category.taxPercentage * 100) / 100
   }
+
+  calculateUnitaryTaxedAmount() {
+    return Math.round((this.price + this.calculateUnitaryTax()) * 100) / 100
+  }
 }
 
 export default Product
