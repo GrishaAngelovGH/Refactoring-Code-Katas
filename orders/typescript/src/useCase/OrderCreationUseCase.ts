@@ -27,8 +27,7 @@ class OrderCreationUseCase {
       }
       else {
         const unitaryTax: number = product.calculateUnitaryTax()
-        const unitaryTaxedAmount: number = product.calculateUnitaryTaxedAmount()
-        const taxedAmount: number = Math.round(unitaryTaxedAmount * itemRequest.getQuantity() * 100) / 100
+        const taxedAmount: number = product.calculateTaxedAmount(itemRequest.getQuantity())
         const taxAmount: number = unitaryTax * itemRequest.getQuantity()
 
         const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity(), taxedAmount, taxAmount)
