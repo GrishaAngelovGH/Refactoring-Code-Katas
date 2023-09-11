@@ -19,12 +19,10 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('approvedExistingOrder', () => {
-    let initialOrder: Order = new OrderBuilder().buildCreatedOrder()
+    const initialOrder: Order = new OrderBuilder().buildCreatedOrder()
     orderRepository.addOrder(initialOrder)
 
-    let request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(true)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, true)
 
     useCase.run(request)
 
@@ -33,12 +31,10 @@ describe('OrderApprovalUseCase', () => {
   })
 
   it('rejectedExistingOrder', () => {
-    let initialOrder: Order = new OrderBuilder().buildCreatedOrder()
+    const initialOrder: Order = new OrderBuilder().buildCreatedOrder()
     orderRepository.addOrder(initialOrder)
 
-    let request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(false)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, false)
 
     useCase.run(request)
 
@@ -50,9 +46,7 @@ describe('OrderApprovalUseCase', () => {
     const initialOrder: Order = new OrderBuilder().buildRejectedOrder()
     orderRepository.addOrder(initialOrder)
 
-    const request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(true)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, true)
 
     expect(() => useCase.run(request)).toThrow(RejectedOrderCannotBeApprovedException)
     expect(orderRepository.getSavedOrder()).toBe(null)
@@ -62,9 +56,7 @@ describe('OrderApprovalUseCase', () => {
     const initialOrder: Order = new OrderBuilder().buildApprovedOrder()
     orderRepository.addOrder(initialOrder)
 
-    const request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(false)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, false)
 
     expect(() => useCase.run(request)).toThrow(ApprovedOrderCannotBeRejectedException)
     expect(orderRepository.getSavedOrder()).toBe(null)
@@ -74,21 +66,17 @@ describe('OrderApprovalUseCase', () => {
     const initialOrder: Order = new OrderBuilder().buildShippedOrder()
     orderRepository.addOrder(initialOrder)
 
-    const request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(true)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, true)
 
     expect(() => useCase.run(request)).toThrow(ShippedOrdersCannotBeChangedException)
     expect(orderRepository.getSavedOrder()).toBe(null)
   })
 
   it('shippedOrdersCannotBeRejected', () => {
-    let initialOrder: Order = new OrderBuilder().buildShippedOrder()
+    const initialOrder: Order = new OrderBuilder().buildShippedOrder()
     orderRepository.addOrder(initialOrder)
 
-    let request: OrderApprovalRequest = new OrderApprovalRequest()
-    request.setOrderId(1)
-    request.setApproved(false)
+    const request: OrderApprovalRequest = new OrderApprovalRequest(1, false)
 
     expect(() => useCase.run(request)).toThrow(ShippedOrdersCannotBeChangedException)
     expect(orderRepository.getSavedOrder()).toBe(null)

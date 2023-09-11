@@ -14,21 +14,21 @@ class OrderApprovalUseCase {
   }
 
   public run(request: OrderApprovalRequest): void {
-    const order: Order = this.orderRepository.getById(request.getOrderId());
+    const order: Order = this.orderRepository.getById(request.orderId);
 
     if (order.status === OrderStatus.SHIPPED) {
       throw new ShippedOrdersCannotBeChangedException();
     }
 
-    if (request.isApproved() && order.status === OrderStatus.REJECTED) {
+    if (request.isApproved && order.status === OrderStatus.REJECTED) {
       throw new RejectedOrderCannotBeApprovedException();
     }
 
-    if (!request.isApproved() && order.status === OrderStatus.APPROVED) {
+    if (!request.isApproved && order.status === OrderStatus.APPROVED) {
       throw new ApprovedOrderCannotBeRejectedException();
     }
 
-    order.updateStatus(request.isApproved() ? OrderStatus.APPROVED : OrderStatus.REJECTED);
+    order.updateStatus(request.isApproved ? OrderStatus.APPROVED : OrderStatus.REJECTED);
     this.orderRepository.save(order);
   }
 }
