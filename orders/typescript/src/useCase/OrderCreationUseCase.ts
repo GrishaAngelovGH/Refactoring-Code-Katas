@@ -26,8 +26,8 @@ class OrderCreationUseCase {
         throw new UnknownProductException();
       }
       else {
-        const unitaryTax: number = Math.round(product.getPrice() / 100 * product.getCategory().taxPercentage * 100) / 100;
-        const unitaryTaxedAmount: number = Math.round((product.getPrice() + unitaryTax) * 100) / 100;
+        const unitaryTax: number = Math.round(product.price / 100 * product.category.taxPercentage * 100) / 100;
+        const unitaryTaxedAmount: number = Math.round((product.price + unitaryTax) * 100) / 100;
         const taxedAmount: number = Math.round(unitaryTaxedAmount * itemRequest.getQuantity() * 100) / 100;
         const taxAmount: number = unitaryTax * itemRequest.getQuantity();
 
