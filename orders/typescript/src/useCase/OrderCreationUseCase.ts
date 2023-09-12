@@ -19,7 +19,7 @@ class OrderCreationUseCase {
   public run(request: SellItemsRequest): void {
     const order: Order = new Order(0, 'EUR', [], 0, OrderStatus.CREATED, 1)
 
-    for (const itemRequest of request.getRequests()) {
+    for (const itemRequest of request.sellItemRequests) {
       const product: Product = this.productCatalog.getByName(itemRequest.productName)
 
       if (product === undefined) {

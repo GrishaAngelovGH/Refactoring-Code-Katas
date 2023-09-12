@@ -24,10 +24,9 @@ describe('OrderCreationUseCase', () => {
     const saladRequest: SellItemRequest = new SellItemRequest('salad', 2)
     const tomatoRequest: SellItemRequest = new SellItemRequest('tomato', 3)
 
-    const request: SellItemsRequest = new SellItemsRequest()
-    request.setRequests([])
-    request.getRequests().push(saladRequest)
-    request.getRequests().push(tomatoRequest)
+    const request: SellItemsRequest = new SellItemsRequest([])
+    request.sellItemRequests.push(saladRequest)
+    request.sellItemRequests.push(tomatoRequest)
 
     useCase.run(request)
 
@@ -50,10 +49,9 @@ describe('OrderCreationUseCase', () => {
   })
 
   it('unknownProduct', () => {
-    const request: SellItemsRequest = new SellItemsRequest()
-    request.setRequests([])
+    const request: SellItemsRequest = new SellItemsRequest([])
     const unknownProductRequest: SellItemRequest = new SellItemRequest('unknown product', 1)
-    request.getRequests().push(unknownProductRequest)
+    request.sellItemRequests.push(unknownProductRequest)
 
     expect(() => useCase.run(request)).toThrow(UnknownProductException)
   })
