@@ -21,15 +21,10 @@ describe('OrderCreationUseCase', () => {
   const useCase: OrderCreationUseCase = new OrderCreationUseCase(orderRepository, productCatalog)
 
   it('sellMultipleItems', () => {
-    let saladRequest: SellItemRequest = new SellItemRequest()
-    saladRequest.setProductName('salad')
-    saladRequest.setQuantity(2)
+    const saladRequest: SellItemRequest = new SellItemRequest('salad', 2)
+    const tomatoRequest: SellItemRequest = new SellItemRequest('tomato', 3)
 
-    let tomatoRequest: SellItemRequest = new SellItemRequest()
-    tomatoRequest.setProductName('tomato')
-    tomatoRequest.setQuantity(3)
-
-    let request: SellItemsRequest = new SellItemsRequest()
+    const request: SellItemsRequest = new SellItemsRequest()
     request.setRequests([])
     request.getRequests().push(saladRequest)
     request.getRequests().push(tomatoRequest)
@@ -55,10 +50,9 @@ describe('OrderCreationUseCase', () => {
   })
 
   it('unknownProduct', () => {
-    let request: SellItemsRequest = new SellItemsRequest()
+    const request: SellItemsRequest = new SellItemsRequest()
     request.setRequests([])
-    let unknownProductRequest: SellItemRequest = new SellItemRequest()
-    unknownProductRequest.setProductName('unknown product')
+    const unknownProductRequest: SellItemRequest = new SellItemRequest('unknown product', 1)
     request.getRequests().push(unknownProductRequest)
 
     expect(() => useCase.run(request)).toThrow(UnknownProductException)

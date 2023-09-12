@@ -20,16 +20,16 @@ class OrderCreationUseCase {
     const order: Order = new Order(0, 'EUR', [], 0, OrderStatus.CREATED, 1)
 
     for (const itemRequest of request.getRequests()) {
-      const product: Product = this.productCatalog.getByName(itemRequest.getProductName())
+      const product: Product = this.productCatalog.getByName(itemRequest.productName)
 
       if (product === undefined) {
         throw new UnknownProductException()
       }
       else {
-        const taxedAmount: number = product.calculateTaxedAmount(itemRequest.getQuantity())
-        const taxAmount: number = product.calculateTaxAmount(itemRequest.getQuantity())
+        const taxedAmount: number = product.calculateTaxedAmount(itemRequest.quantity)
+        const taxAmount: number = product.calculateTaxAmount(itemRequest.quantity)
 
-        const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity(), taxedAmount, taxAmount)
+        const orderItem: OrderItem = new OrderItem(product, itemRequest.quantity, taxedAmount, taxAmount)
         order.items.push(orderItem)
 
         order.updateTotal(order.total + taxedAmount)
