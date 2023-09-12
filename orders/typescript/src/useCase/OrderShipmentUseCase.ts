@@ -16,7 +16,7 @@ class OrderShipmentUseCase {
   }
 
   public run(request: OrderShipmentRequest): void {
-    const order: Order = this.orderRepository.getById(request.getOrderId());
+    const order: Order = this.orderRepository.getById(request.orderId);
 
     if (order.status === OrderStatus.CREATED || order.status === OrderStatus.REJECTED) {
       throw new OrderCannotBeShippedException();
