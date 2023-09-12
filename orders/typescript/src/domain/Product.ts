@@ -22,6 +22,10 @@ class Product {
   calculateTaxedAmount(sellItemQuantity: number) {
     return Math.round(this.calculateUnitaryTaxedAmount() * sellItemQuantity * 100) / 100
   }
+
+  calculateTaxAmount(sellItemQuantity: number) {
+    return this.calculateUnitaryTax() * sellItemQuantity
+  }
 }
 
 export default Product

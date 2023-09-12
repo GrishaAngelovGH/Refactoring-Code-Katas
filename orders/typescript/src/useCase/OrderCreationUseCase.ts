@@ -26,9 +26,8 @@ class OrderCreationUseCase {
         throw new UnknownProductException()
       }
       else {
-        const unitaryTax: number = product.calculateUnitaryTax()
         const taxedAmount: number = product.calculateTaxedAmount(itemRequest.getQuantity())
-        const taxAmount: number = unitaryTax * itemRequest.getQuantity()
+        const taxAmount: number = product.calculateTaxAmount(itemRequest.getQuantity())
 
         const orderItem: OrderItem = new OrderItem(product, itemRequest.getQuantity(), taxedAmount, taxAmount)
         order.items.push(orderItem)
