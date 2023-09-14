@@ -102,4 +102,12 @@ describe('Mars Rover', function () {
     expect(marsRover.location).toEqual([99, 0])
     expect(marsRover.direction).toEqual('W')
   })
+
+  test('should face obstacle', function () {
+    const marsRover = new MarsRover([1, 1], 'N', [3, 3], [[2, 1]])
+
+    marsRover.commands(['r', 'f'])
+
+    expect(marsRover.status).toEqual('obstacle')
+  })
 })
