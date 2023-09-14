@@ -40,6 +40,15 @@ describe('Mars Rover', function () {
     ).toThrow('Commands not found!')
   })
 
+  test('should not perform action', function () {
+    const marsRover = new MarsRover()
+
+    marsRover.commands([])
+
+    expect(marsRover.location).toEqual([0, 0])
+    expect(marsRover.direction).toEqual('N')
+  })
+
   test('should move forward', function () {
     const marsRover = new MarsRover()
 
