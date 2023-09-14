@@ -1,3 +1,5 @@
+class NoCommandsFoundError extends Error { }
+
 class MarsRover {
   constructor(location = [0, 0], direction = 'N', grid = [100, 100], obstacles = []) {
     this.location = location
@@ -9,20 +11,18 @@ class MarsRover {
   }
 
   commands(commands) {
-    if (commands === undefined) { // Getter
-      return this.commandsArray
-    } else { // Setter
-      for (var index = 0; index < commands.length; index++) {
-        var command = commands[index]
-        if (command === 'f' || command === 'b') {
-          if (!this.move(command)) break
-        } else if (command === 'l' || command === 'r') {
-          this.turn(command)
-        }
+    if (!commands) throw new NoCommandsFoundError('Commands not found!')
+
+    for (var index = 0; index < commands.length; index++) {
+      var command = commands[index]
+      if (command === 'f' || command === 'b') {
+        if (!this.move(command)) break
+      } else if (command === 'l' || command === 'r') {
+        this.turn(command)
       }
-      this.resetLocation()
-      this.commandsArray = commands
     }
+    this.resetLocation()
+    this.commandsArray = commands
   }
 
   resetLocation() {
@@ -83,4 +83,4 @@ class MarsRover {
 
 }
 
-module.exports = MarsRover
+module.exports = { MarsRover, NoCommandsFoundError }

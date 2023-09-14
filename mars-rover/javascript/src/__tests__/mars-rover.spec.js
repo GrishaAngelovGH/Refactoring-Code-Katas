@@ -1,4 +1,5 @@
-const MarsRover = require('../mars-rover')
+const { MarsRover, NoCommandsFoundError } = require('../mars-rover')
+
 
 describe('Mars Rover', function () {
   test('should use default location', function () {
@@ -29,6 +30,14 @@ describe('Mars Rover', function () {
     const marsRover = new MarsRover()
 
     expect(marsRover.status).toEqual('OK')
+  })
+
+  test('should throw an error when commands are not provided', function () {
+    const marsRover = new MarsRover()
+
+    expect(
+      () => { marsRover.commands() }
+    ).toThrow('Commands not found!')
   })
 
   test('should move forward', function () {
