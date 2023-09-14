@@ -6,4 +6,10 @@ describe('Mars Rover', function () {
 
     expect(marsRover.location).toEqual([0, 0])
   })
+
+  test('should use default direction', function () {
+    const marsRover = new MarsRover()
+
+    expect(marsRover.direction).toEqual('N')
+  })
 })
