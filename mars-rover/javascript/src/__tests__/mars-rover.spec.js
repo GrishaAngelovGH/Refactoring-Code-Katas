@@ -18,4 +18,10 @@ describe('Mars Rover', function () {
 
     expect(marsRover.grid).toEqual([100, 100])
   })
+
+  test('should use default obstacles', function () {
+    const marsRover = new MarsRover()
+
+    expect(marsRover.obstacles).toEqual([])
+  })
 })
