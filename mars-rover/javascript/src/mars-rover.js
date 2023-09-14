@@ -1,9 +1,9 @@
 class MarsRover {
-  constructor(location, direction, grid, obstacles) {
-    this.location = (location === undefined) ? [0, 0] : location
-    this.direction = (direction === undefined) ? 'N' : direction
-    this.grid = (grid === undefined) ? [100, 100] : grid
-    this.obstacles = (obstacles === undefined) ? [] : obstacles
+  constructor(location = [0, 0], direction = 'N', grid = [100, 100], obstacles = []) {
+    this.location = location
+    this.direction = direction
+    this.grid = grid
+    this.obstacles = obstacles
     this.status = 'OK'
     this.directions = ['N', 'E', 'S', 'W']
   }
