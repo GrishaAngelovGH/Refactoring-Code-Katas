@@ -12,4 +12,10 @@ describe('Mars Rover', function () {
 
     expect(marsRover.direction).toEqual('N')
   })
+
+  test('should use default grid', function () {
+    const marsRover = new MarsRover()
+
+    expect(marsRover.grid).toEqual([100, 100])
+  })
 })
