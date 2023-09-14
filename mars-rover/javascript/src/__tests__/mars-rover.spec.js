@@ -67,12 +67,21 @@ describe('Mars Rover', function () {
     expect(marsRover.direction).toEqual('E')
   })
 
-  test('should turn and move', function () {
+  test('should turn and move East', function () {
     const marsRover = new MarsRover()
 
     marsRover.commands(['r', 'f', 'f'])
 
     expect(marsRover.location).toEqual([2, 0])
     expect(marsRover.direction).toEqual('E')
+  })
+
+  test('should turn and move South', function () {
+    const marsRover = new MarsRover()
+
+    marsRover.commands(['r', 'r', 'f'])
+
+    expect(marsRover.location).toEqual([0, 1])
+    expect(marsRover.direction).toEqual('S')
   })
 })
