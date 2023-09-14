@@ -24,4 +24,10 @@ describe('Mars Rover', function () {
 
     expect(marsRover.obstacles).toEqual([])
   })
+
+  test('should use default status', function () {
+    const marsRover = new MarsRover()
+
+    expect(marsRover.status).toEqual('OK')
+  })
 })
