@@ -30,4 +30,12 @@ describe('Mars Rover', function () {
 
     expect(marsRover.status).toEqual('OK')
   })
+
+  test('should move forward', function () {
+    const marsRover = new MarsRover()
+
+    marsRover.commands(['f'])
+
+    expect(marsRover.location).toEqual([0, 99])
+  })
 })
