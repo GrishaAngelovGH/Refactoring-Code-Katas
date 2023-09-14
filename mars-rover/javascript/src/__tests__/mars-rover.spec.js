@@ -38,4 +38,13 @@ describe('Mars Rover', function () {
 
     expect(marsRover.location).toEqual([0, 99])
   })
+
+  test('should move backward', function () {
+    const marsRover = new MarsRover()
+
+    marsRover.commands(['b'])
+
+    expect(marsRover.location).toEqual([0, 1])
+  })
+
 })
