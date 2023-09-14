@@ -47,4 +47,11 @@ describe('Mars Rover', function () {
     expect(marsRover.location).toEqual([0, 1])
   })
 
+  test('should move left', function () {
+    const marsRover = new MarsRover()
+
+    marsRover.commands(['l'])
+
+    expect(marsRover.location).toEqual([0, 0])
+  })
 })
