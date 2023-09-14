@@ -1,84 +1,83 @@
-function MarsRover(location, direction, grid, obstacles) {
+class MarsRover {
+  constructor(location, direction, grid, obstacles) {
+    this.location = (location === undefined) ? [0, 0] : location
+    this.direction = (direction === undefined) ? 'N' : direction
+    this.grid = (grid === undefined) ? [100, 100] : grid
+    this.obstacles = (obstacles === undefined) ? [] : obstacles
+    this.status = 'OK'
+    this.directions = ['N', 'E', 'S', 'W']
+  }
 
-  self = this;
-  this.location = (location === undefined) ? [0, 0] : location;
-  this.direction = (direction === undefined) ? 'N' : direction;
-  this.grid = (grid === undefined) ? [100, 100] : grid;
-  this.obstacles = (obstacles === undefined) ? [] : obstacles;
-  this.status = 'OK';
-
-  this.commands = function (commands) {
+  commands(commands) {
     if (commands === undefined) { // Getter
-      return this.commandsArray;
+      return this.commandsArray
     } else { // Setter
       for (var index = 0; index < commands.length; index++) {
-        var command = commands[index];
+        var command = commands[index]
         if (command === 'f' || command === 'b') {
-          if (!move(command)) break;
+          if (!this.move(command)) break
         } else if (command === 'l' || command === 'r') {
-          turn(command);
+          this.turn(command)
         }
       }
-      resetLocation();
-      this.commandsArray = commands;
+      this.resetLocation()
+      this.commandsArray = commands
     }
-  };
+  }
 
-  function resetLocation() {
-    self.location = [
-      (self.location[0] + self.grid[0]) % self.grid[0],
-      (self.location[1] + self.grid[1]) % self.grid[1]
+  resetLocation() {
+    this.location = [
+      (this.location[0] + this.grid[0]) % this.grid[0],
+      (this.location[1] + this.grid[1]) % this.grid[1]
     ]
   }
 
-  function move(command) {
-    var xIncrease = 0, yIncrease = 0;
-    if (self.direction === 'N') {
-      yIncrease = -1;
-    } else if (self.direction === 'E') { // East
-      xIncrease = 1;
-    } else if (self.direction === 'S') { // South
-      yIncrease = 1;
-    } else if (self.direction === 'W') { // West
-      xIncrease = -1;
+  move(command) {
+    var xIncrease = 0, yIncrease = 0
+    if (this.direction === 'N') {
+      yIncrease = -1
+    } else if (this.direction === 'E') { // East
+      xIncrease = 1
+    } else if (this.direction === 'S') { // South
+      yIncrease = 1
+    } else if (this.direction === 'W') { // West
+      xIncrease = -1
     }
     if (command === 'b') { // Backward
-      xIncrease *= -1;
-      yIncrease *= -1;
+      xIncrease *= -1
+      yIncrease *= -1
     }
-    var newLocation = [self.location[0] + xIncrease, self.location[1] + yIncrease];
-    if (isObstacle(newLocation)) {
-      return false;
+    var newLocation = [this.location[0] + xIncrease, this.location[1] + yIncrease]
+    if (this.isObstacle(newLocation)) {
+      return false
     }
-    self.location = newLocation;
-    return true;
+    this.location = newLocation
+    return true
   }
 
-  function isObstacle(newLocation) {
-    for (var index = 0; index < self.obstacles.length; index++) {
-      if (newLocation.toString() == self.obstacles[index].toString()) {
-        self.status = 'obstacle';
-        return true;
+  isObstacle(newLocation) {
+    for (var index = 0; index < this.obstacles.length; index++) {
+      if (newLocation.toString() == this.obstacles[index].toString()) {
+        this.status = 'obstacle'
+        return true
       }
     }
-    return false;
+    return false
   }
 
-  function turn(command) {
-    var directionNumber = directionAsNumber(self.direction);
+  turn(command) {
+    var directionNumber = this.directionAsNumber(this.direction)
     if (command === 'l') { // Left
-      directionNumber = (directionNumber + 4 - 1) % 4;
+      directionNumber = (directionNumber + 4 - 1) % 4
     } else { // Right
-      directionNumber = (directionNumber + 1) % 4;
+      directionNumber = (directionNumber + 1) % 4
     }
-    self.direction = self.directions[directionNumber];
+    this.direction = this.directions[directionNumber]
   }
 
-  this.directions = ['N', 'E', 'S', 'W'];
-
-  function directionAsNumber(direction) {
+  directionAsNumber(direction) {
     for (var index = 0; index < 4; index++) {
-      if (self.directions[index] === direction) return index;
+      if (this.directions[index] === direction) return index
     }
   }
 
