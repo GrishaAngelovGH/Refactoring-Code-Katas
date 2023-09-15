@@ -67,8 +67,8 @@ class MarsRover {
   }
 
   isObstacle(newLocation) {
-    for (var index = 0; index < this.obstacles.length; index++) {
-      if (newLocation.toString() == this.obstacles[index].toString()) {
+    for (let i = 0; i < this.obstacles.length; i++) {
+      if (newLocation.toString() === this.obstacles[i].toString()) {
         this.status = 'obstacle'
         return true
       }
