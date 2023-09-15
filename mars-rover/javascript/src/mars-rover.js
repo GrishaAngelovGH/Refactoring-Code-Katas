@@ -22,6 +22,12 @@ class MarsRover {
         this.turn(command)
       }
     }
+    this.coordinates = {
+      'N': [0, -1],
+      'E': [1, 0],
+      'S': [0, 1],
+      'W': [-1, 0]
+    }
   }
 
   commands(commands) {
@@ -42,16 +48,8 @@ class MarsRover {
   }
 
   move(command) {
-    var xIncrease = 0, yIncrease = 0
-    if (this.direction === 'N') {
-      yIncrease = -1
-    } else if (this.direction === 'E') { // East
-      xIncrease = 1
-    } else if (this.direction === 'S') { // South
-      yIncrease = 1
-    } else if (this.direction === 'W') { // West
-      xIncrease = -1
-    }
+    let [xIncrease, yIncrease] = this.coordinates[this.direction]
+
     if (command === 'b') { // Backward
       xIncrease *= -1
       yIncrease *= -1
