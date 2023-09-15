@@ -30,6 +30,15 @@ class MarsRover {
     }
   }
 
+  calculateNewLocation(xIncrease, yIncrease, command) {
+    if (command === 'b') {
+      xIncrease *= -1
+      yIncrease *= -1
+    }
+
+    return [this.location[0] + xIncrease, this.location[1] + yIncrease]
+  }
+
   commands(commands) {
     if (!commands) throw new NoCommandsFoundError('Commands not found!')
 
@@ -48,16 +57,11 @@ class MarsRover {
   }
 
   move(command) {
-    let [xIncrease, yIncrease] = this.coordinates[this.direction]
+    const [xIncrease, yIncrease] = this.coordinates[this.direction]
+    const newLocation = this.calculateNewLocation(xIncrease, yIncrease, command)
 
-    if (command === 'b') { // Backward
-      xIncrease *= -1
-      yIncrease *= -1
-    }
-    var newLocation = [this.location[0] + xIncrease, this.location[1] + yIncrease]
-    if (this.isObstacle(newLocation)) {
-      return false
-    }
+    if (this.isObstacle(newLocation)) return false
+
     this.location = newLocation
     return true
   }
