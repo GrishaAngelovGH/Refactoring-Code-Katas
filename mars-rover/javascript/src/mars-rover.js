@@ -77,21 +77,14 @@ class MarsRover {
   }
 
   turn(command) {
-    var directionNumber = this.directionAsNumber(this.direction)
+    var directionIndex = this.directions.indexOf(this.direction)
     if (command === 'l') { // Left
-      directionNumber = (directionNumber + 4 - 1) % 4
+      directionIndex = (directionIndex + 4 - 1) % 4
     } else { // Right
-      directionNumber = (directionNumber + 1) % 4
+      directionIndex = (directionIndex + 1) % 4
     }
-    this.direction = this.directions[directionNumber]
+    this.direction = this.directions[directionIndex]
   }
-
-  directionAsNumber(direction) {
-    for (var index = 0; index < 4; index++) {
-      if (this.directions[index] === direction) return index
-    }
-  }
-
 }
 
 module.exports = { MarsRover, NoCommandsFoundError }
