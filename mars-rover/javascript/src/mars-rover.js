@@ -39,6 +39,12 @@ class MarsRover {
     return [this.location[0] + xIncrease, this.location[1] + yIncrease]
   }
 
+  chooseDirection(command) {
+    const currentDirectionIndex = this.directions.indexOf(this.direction)
+    const newDirectionIndex = command === 'l' ? (currentDirectionIndex + 4 - 1) % 4 : (currentDirectionIndex + 1) % 4
+    return this.directions[newDirectionIndex]
+  }
+
   commands(commands) {
     if (!commands) throw new NoCommandsFoundError('Commands not found!')
 
@@ -77,13 +83,7 @@ class MarsRover {
   }
 
   turn(command) {
-    var directionIndex = this.directions.indexOf(this.direction)
-    if (command === 'l') { // Left
-      directionIndex = (directionIndex + 4 - 1) % 4
-    } else { // Right
-      directionIndex = (directionIndex + 1) % 4
-    }
-    this.direction = this.directions[directionIndex]
+    this.direction = this.chooseDirection(command)
   }
 }
 
