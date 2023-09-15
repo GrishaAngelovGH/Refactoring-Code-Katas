@@ -8,21 +8,30 @@ class MarsRover {
     this.obstacles = obstacles
     this.status = 'OK'
     this.directions = ['N', 'E', 'S', 'W']
+    this.commandActions = {
+      'f': command => {
+        if (!this.move(command)) this.resetLocation()
+      },
+      'b': command => {
+        if (!this.move(command)) this.resetLocation()
+      },
+      'l': command => {
+        this.turn(command)
+      },
+      'r': command => {
+        this.turn(command)
+      }
+    }
   }
 
   commands(commands) {
     if (!commands) throw new NoCommandsFoundError('Commands not found!')
 
-    for (var index = 0; index < commands.length; index++) {
-      var command = commands[index]
-      if (command === 'f' || command === 'b') {
-        if (!this.move(command)) break
-      } else if (command === 'l' || command === 'r') {
-        this.turn(command)
-      }
-    }
+    commands.forEach(command => {
+      this.commandActions[command](command)
+    })
+
     this.resetLocation()
-    this.commandsArray = commands
   }
 
   resetLocation() {
