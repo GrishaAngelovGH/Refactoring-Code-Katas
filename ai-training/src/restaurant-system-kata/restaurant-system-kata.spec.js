@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import RestaurantSystem from "./restaurant-system-kata.js"
 
-describe.only("RestaurantSystem", () => {
+describe("RestaurantSystem", () => {
   let system
 
   beforeEach(() => {
